@@ -321,9 +321,9 @@ namespace Wz.Controls.Wpf
 
         private void DrawPoint(Point pt)
         {
-            var h1 = new Ellipse { Width = HANDLE_RADIUS * 2, Height = HANDLE_RADIUS * 2, Fill = Brushes.Black };
-            Canvas.SetLeft(h1, pt.X - HANDLE_RADIUS);
-            Canvas.SetTop(h1, pt.Y - HANDLE_RADIUS);
+            var h1 = new Ellipse { Width = HANDLE_RADIUS, Height = HANDLE_RADIUS, Fill = Brushes.Black };
+            Canvas.SetLeft(h1, pt.X - HANDLE_RADIUS / 2);
+            Canvas.SetTop(h1, pt.Y - HANDLE_RADIUS / 2);
             PART_Canvas.Children.Add(h1);
         }
     }
