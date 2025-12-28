@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 
 namespace BezierTest
 {
@@ -10,6 +11,11 @@ namespace BezierTest
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var points = bezierEditor1.Sample(20).ToList();
         }
     }
 }

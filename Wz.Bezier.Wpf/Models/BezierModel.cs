@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Wz.Bezier.Sampler.Abstractions;
 
 namespace Wz.Controls.Wpf.Models
 {
@@ -86,5 +87,6 @@ namespace Wz.Controls.Wpf.Models
             }
             return best;
         }
+
     }
 }

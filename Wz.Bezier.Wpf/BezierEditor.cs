@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Wz.Bezier.Sampler.Abstractions;
 using Wz.Controls.Wpf.Commands;
 using Wz.Controls.Wpf.Models;
 
@@ -12,6 +14,7 @@ namespace Wz.Controls.Wpf
     [TemplatePart(Name = "PART_Canvas", Type = typeof(Canvas))]
     public class BezierEditor : Control
     {
+        #region Ë½ÓÐ×Ö¶Î
         private readonly BezierPathModel _model = new BezierPathModel();
         private readonly EditCommandManager _cmd = new EditCommandManager();
 
@@ -31,6 +34,8 @@ namespace Wz.Controls.Wpf
         private Point _originalPoint;
 
         private Canvas PART_Canvas;
+
+        #endregion
 
         static BezierEditor()
         {
@@ -325,6 +330,41 @@ namespace Wz.Controls.Wpf
             Canvas.SetLeft(h1, pt.X - HANDLE_RADIUS / 2);
             Canvas.SetTop(h1, pt.Y - HANDLE_RADIUS / 2);
             PART_Canvas.Children.Add(h1);
+        }
+
+        public IEnumerable<IVec2> Sample(int samplesPerSegment)
+        {
+            if (_model.Points.Count < 2) yield break;
+
+            for (int i = 1; i < _model.Points.Count; i++)
+            {
+                var a = _model.Points[i - 1];
+                var b = _model.Points[i];
+
+                for (int s = 0; s <= samplesPerSegment; s++)
+                {
+                    double t = s / (double)samplesPerSegment;
+                    yield return Cubic(a.Position,
+                                       a.HandleOutAbsolute,
+                                       b.HandleInAbsolute,
+                                       b.Position,
+                                       t);
+                }
+            }
+        }
+
+        private IVec2 Cubic(Point p0, Point p1, Point p2, Point p3, double t)
+        {
+            double u = 1 - t;
+            double tt = t * t;
+            double uu = u * u;
+            double uuu = uu * u;
+            double ttt = tt * t;
+
+            return new Vec2(
+                uuu * p0.X + 3 * uu * t * p1.X + 3 * u * tt * p2.X + ttt * p3.X,
+                uuu * p0.Y + 3 * uu * t * p1.Y + 3 * u * tt * p2.Y + ttt * p3.Y
+            );
         }
     }
 }

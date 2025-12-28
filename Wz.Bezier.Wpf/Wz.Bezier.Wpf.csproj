@@ -84,5 +84,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wz.Bezier.Sampler.Abstractions\Wz.Bezier.Sampler.Abstractions.csproj">
+      <Project>{A9366D41-BCD2-4C9C-AD56-C06D575E10F5}</Project>
+      <Name>Wz.Bezier.Sampler.Abstractions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
